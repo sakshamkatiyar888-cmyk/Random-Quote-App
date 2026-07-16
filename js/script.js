@@ -6,13 +6,17 @@ const button=document.getElementById("btn");
 
 button.addEventListener("click",getQuote);
 
+
 async function getQuote(){
+
+    button.disabled=true;
+    button.textContent="Loading..."
 
     try{
 
-        quote.innerText="Loading Quotes...";
+        quote.textContent="Loading Quotes...";
 
-        author.innerText="";
+        author.textContent="";
 
         const response= await fetch(
              "https://dummyjson.com/quotes/random"
@@ -24,15 +28,18 @@ async function getQuote(){
         }
         const data= await response.json();
 
-        quote.innerText=`"${data.quote}"`;
-        author.innerText=`-${data.author}`;
+        quote.textContent=`"${data.quote}"`;
+        author.textContent=`-${data.author}`;
         
     }
     catch (error){
 
-        quote.innerText="Something Went Wrong.";
+        quote.textContent="Something Went Wrong.";
 
-        author.innerText="";
+        author.textContent="";
         console.log(error);
+    }finally{
+        button.disabled=false;
+        button.textContent="Get Quote"
     }
 }
